@@ -1,0 +1,22 @@
+.bike-canvas .workshop-bike.workshop-image{inset:50% auto auto;width:min(calc(100% - 44px),490px);height:auto;aspect-ratio:1;left:50%;transform:translate(-50%,-50%);overflow:visible;background:#ffd800}
+.workshop-bike-image{object-fit:contain}
+.component-pin{z-index:5}
+.bike-canvas .component-pin>span{box-shadow:0 1px 5px #1519138c}
+.bike-canvas .pin-wheel{right:8%;top:58%}
+.bike-canvas .pin-tyre{right:5%;top:72%}
+.bike-canvas .pin-cassette{left:12%;top:58%}
+.bike-canvas .pin-chain{left:38%;top:63%}
+.bike-canvas .pin-chainrings{left:39%;top:60%}
+.bike-canvas .pin-cranks{left:43%;top:68%}
+.bike-canvas .pin-brake{left:9%;top:47%}
+.bike-canvas .pin-brake-rotor{left:12%;top:64%}
+.bike-canvas .pin-brake-pads{left:14%;top:48%}
+.bike-canvas .pin-pedals{left:44%;top:73%}
+.bike-canvas .pin-seat-post{left:27%;top:25%}
+.bike-canvas .pin-bottom-bracket{left:39%;top:57%}
+.bike-canvas .pin-shock{left:26%;top:49%}
+.bike-canvas .pin-stem{left:64%;top:30%}
+.bike-canvas .pin-handlebar{left:73%;top:15%}
+.bike-canvas .pin-hub{right:15%;top:60%}
+.bike-canvas .pin-battery{left:46%;top:48%}
+@media(max-width:700px){.bike-canvas .workshop-bike.workshop-image{inset:50% auto auto;width:min(calc(100% - 10px),350px)}.bike-canvas .component-pin>span{width:19px;height:19px}.bike-canvas .component-pin small{font-size:6px}}

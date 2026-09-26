@@ -1,0 +1,5 @@
+import { GitCompareArrows, SlidersHorizontal } from "lucide-react";
+import SiteShell from "@/components/site-shell";
+import ComparisonBuilder from "@/components/comparison-builder";
+
+export default function ComparePage(){return <SiteShell><main className="page-main"><section className="page-heading content-wrap"><div><span className="eyebrow"><i/> COMPARATEUR DE COMPOSANTS</span><h1>Deux pièces.<br/><em>Un choix éclairé.</em></h1><p>Ajoutez des références pour comparer les informations réellement présentes dans la bibliothèque.</p></div><span className="compare-hero-icon"><GitCompareArrows size={28}/></span></section><section className="content-wrap compare-content"><div className="compare-intro"><span><SlidersHorizontal size={16}/> COMPARAISON CÔTE À CÔTE</span><span>JUSQU’À 4 OPTIONS</span></div><ComparisonBuilder/></section><section className="content-wrap compare-tip"><b>Les dimensions font la différence.</b><p>Deux pièces d’une même famille ne sont pas forcément interchangeables. Vérifiez les dimensions et la documentation avant achat; ces champs ne sont pas encore couverts par la bibliothèque fournie.</p></section></main></SiteShell>}

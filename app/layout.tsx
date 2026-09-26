@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "VeloScope — Montez le vélo qui vous ressemble",
+  title: "VeloScope — Comprendre et composer son vélo",
   description:
-    "Explorez les composants vélo, vérifiez leur compatibilité et composez votre prochain montage avec VeloScope.",
+    "Explorez 8 846 composants vélo, construisez votre montage et vérifiez les dimensions et compatibilités à partir de sources documentées.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

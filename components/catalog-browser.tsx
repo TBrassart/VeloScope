@@ -1,0 +1,25 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { Heart, Search, SlidersHorizontal } from "lucide-react";
+
+type RawPart = { id: string; brand: string; model: string; category: string; lifespan_km: string | number; created_at: string; name: string };
+
+const labels: Record<string, string> = { tyre: "Pneus", wheel: "Roues", fork: "Fourches", chainrings: "Plateaux", cassette: "Cassettes", chain: "Chaînes", pedals: "Pédales", "brake-rotor": "Disques de frein", "brake-pads": "Plaquettes", shock: "Amortisseurs", "seat-post": "Tiges de selle", "bottom-bracket": "Boîtiers de pédalier", brake: "Freins", cranks: "Manivelles", battery: "Batteries", chainguide: "Guides-chaîne", hub: "Moyeux", "inner-tube": "Chambres à air", sprocket: "Pignons", stem: "Potences", handlebar: "Guidons", sealant: "Préventif", other: "Autres" };
+const categories = Object.keys(labels);
+const formatCategory = (category: string) => labels[category] ?? category;
+
+export default function CatalogBrowser() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const [brand, setBrand] = useState("all");
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [parts, setParts] = useState<RawPart[]>([]);
+  useEffect(() => { fetch("/data/component-library.json").then((response) => response.json()).then((data: RawPart[]) => setParts(data)).catch(() => setParts([])); }, []);
+  const brands = useMemo(() => [...new Set(parts.map((part) => part.brand))].sort((a, b) => a.localeCompare(b)), [parts]);
+  const filtered = useMemo(() => parts.filter((part) => (category === "all" || part.category === category) && (brand === "all" || part.brand === brand) && `${part.name} ${part.brand} ${part.model} ${part.category}`.toLocaleLowerCase("fr").includes(query.toLocaleLowerCase("fr").trim())), [parts, query, category, brand]);
+  const toggleFavorite = (id: string) => setFavorites((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
+
+  return <><div className="catalog-tools"><label className="catalog-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Nom, marque, modèle…" aria-label="Rechercher un composant" /></label><label className="select-filter"><SlidersHorizontal size={16} /><span>Catégorie</span><select value={category} onChange={(event) => setCategory(event.target.value)}><option value="all">Toutes</option>{categories.map((item) => <option value={item} key={item}>{formatCategory(item)}</option>)}</select></label><label className="select-filter"><span>Marque</span><select value={brand} onChange={(event) => setBrand(event.target.value)}><option value="all">Toutes</option>{brands.map((item) => <option value={item} key={item}>{item}</option>)}</select></label><span className="catalog-count">{filtered.length.toLocaleString("fr-FR")} composants</span></div>{parts.length===0?<div className="empty-state"><Search size={22}/><strong>Chargement de la bibliothèque…</strong><span>Les composants arrivent depuis le fichier importé.</span></div>:<><div className="component-grid">{filtered.slice(0, 120).map((part, index) => <article className="component-card" key={part.id}><div className={`component-art art-${part.category}`}><span className="part-type">{formatCategory(part.category)}</span><span className="part-number">{String(index + 1).padStart(3, "0")}</span><div className="part-orbit"><span>{part.category === "tyre" ? "◉" : part.category === "chain" ? "⌁" : part.category === "wheel" ? "◎" : "◈"}</span></div><button onClick={() => toggleFavorite(part.id)} className={favorites.includes(part.id) ? "card-heart saved" : "card-heart"} aria-label="Ajouter à la liste de projet"><Heart size={17} fill={favorites.includes(part.id) ? "currentColor" : "none"} /></button></div><div className="component-card-body"><span className="component-brand">{part.brand}</span><h3>{part.name}</h3><div className="component-meta"><span>{part.model}</span>{Number(part.lifespan_km) > 0 && <span>Durée indicative · {Number(part.lifespan_km).toLocaleString("fr-FR")} km</span>}</div><details><summary>Données disponibles</summary><p>Fiche importée depuis la bibliothèque du projet. Les dimensions, prix et compatibilités nécessitent des sources complémentaires.</p></details><div className="component-actions"><span className="confidence confidence-low">À documenter</span><button onClick={() => toggleFavorite(part.id)}>{favorites.includes(part.id) ? "Ajouté au projet" : "Ajouter au projet"}</button></div></div></article>)}</div>{filtered.length > 120 && <p className="catalog-pagination">Affichage des 120 premiers résultats. Affinez la recherche pour continuer.</p>}{filtered.length === 0 && <div className="empty-state"><Search size={22} /><strong>Aucun composant trouvé</strong><span>Modifiez le terme ou les filtres.</span></div>}</>}<p className="catalog-disclaimer">Les prix et compatibilités ne figurent pas dans le fichier source; ils ne sont pas estimés ici. Le nombre affiché correspond aux fiches fournies dans component_library.csv.</p></>;
+}
+

@@ -1,6 +1,10 @@
-.bike-canvas .workshop-bike.workshop-image{inset:50% auto auto;width:min(calc(100% - 44px),490px);height:auto;aspect-ratio:1;left:50%;transform:translate(-50%,-50%);overflow:visible;background:#ffd800}
+.workbench .bike-canvas{background:#fff}
+.bike-canvas .workshop-bike.workshop-image{inset:50% auto auto;width:min(calc(100% - 44px),490px);height:auto;aspect-ratio:1;left:50%;transform:translate(-50%,-50%);overflow:visible;background:#fff}
 .workshop-bike-image{object-fit:contain}
 .component-pin{z-index:5}
+.bike-canvas .movable-pin{transform:translate(-50%,-50%);touch-action:none;cursor:grab}
+.bike-canvas .movable-pin:active{cursor:grabbing}
+.part-orbit img{width:82%;height:82%;object-fit:contain}
 .bike-canvas .component-pin>span{box-shadow:0 1px 5px #1519138c}
 .bike-canvas .pin-wheel{right:8%;top:58%}
 .bike-canvas .pin-tyre{right:5%;top:72%}
